@@ -13,7 +13,7 @@ import './login.less'
         this.props.form.validateFields(async (err, {username, password}) => {
             if (!err) {
              const result = await reqLogin(username, password)
-             if(result.status == 0){
+             if(result.status === 0){
                 this.props.history.replace('/admin')
              }else{
                 message.error(result.msg)
