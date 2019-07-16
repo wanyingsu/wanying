@@ -3,7 +3,7 @@ import { Form, Icon, Input, Button, message} from 'antd'
 import { Redirect } from 'react-router-dom'
 import memoryUtils from '../../utils/memoryUtils'
 import storageUtils from '../../utils/storageUtils'
-import logo from './images/logo.png'
+import logo from '../../assets/images/logo.png'
 import {reqLogin} from '../../api'
 import './login.less'
 
