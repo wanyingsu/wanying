@@ -1,5 +1,8 @@
 import React,{Component} from 'react'
 import { Form, Icon, Input, Button, message} from 'antd'
+import { Redirect } from 'react-router-dom'
+import memoryUtils from '../../utils/memoryUtils'
+import storageUtils from '../../utils/storageUtils'
 import logo from './images/logo.png'
 import {reqLogin} from '../../api'
 import './login.less'
@@ -11,18 +14,31 @@ import './login.less'
     handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields(async (err, {username, password}) => {
-            if (!err) {
-             const result = await reqLogin(username, password)
-             if(result.status === 0){
-                this.props.history.replace('/admin')
-             }else{
-                message.error(result.msg)
-             }
+          if (!err) {
+            // try {} catch (error) {}
+            // alert(`发登陆的ajax请求, username=${username}, password=${password}`)
+            const result = await reqLogin(username, password)
+            // 登陆成功
+            if (result.status===0) {
+              // 将user信息保存到local
+              const user = result.data
+              // localStorage.setItem('user_key', JSON.stringify(user))
+              storageUtils.saveUser(user)
+              // 保存到内存中
+              memoryUtils.user = user
+    
+              // 跳转到管理界面
+              this.props.history.replace('/admin')
+              message.success('登陆成功!')
+            } else { // 登陆失败
+              message.error(result.msg)
+            }
             
-
-            //   alert(`发登陆的ajax请求, username=${username}, password=${password}`)
-            } 
-          })
+    
+          } else {
+            // alert('验证失败!')
+          }
+        })
       };
 
 
@@ -48,6 +64,12 @@ import './login.less'
 
 
     render(){
+      const user = memoryUtils.user
+      if (user._id) {
+        return <Redirect to="/admin" /> // 自动跳转到指定的路由路径
+      }
+  
+
         const {getFieldDecorator} = this.props.form;
         return(
             <div className='login'>
