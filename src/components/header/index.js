@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { Modal } from 'antd'
 
-import LinkButton from '../../components/link-button'
+import LinkButton from '../link-button'
 import {reqWeather} from '../../api'
 import { formateDate } from '../../utils/dateUtils'
 import menuList from '../../config/menuConfig'
