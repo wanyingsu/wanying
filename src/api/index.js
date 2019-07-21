@@ -54,3 +54,36 @@ export const reqWeather = (city) => {
       pageSize
     }
   })
+
+  //根据Name/desc搜索产品分页列表
+  export const reqSearchProducts = ({pageNum,
+        pageSize,
+        searchName,
+        searchType // 它的值是'productName'或者'productDesc') = > ajax(
+    })=> ajax(BASE + '/manage/product/search', {
+        // method: 'GET',
+        params: {
+          pageNum,
+          pageSize,
+          [searchType]: searchName,
+       }})
+
+       /* 对商品进行上架/下架处理 */
+     export const  reqUpdateStatus = ( productId,status) =>ajax(BASE + '/manage/product/updateStatus',{
+       method:'post',
+       data:{
+         productId,
+         status
+       }
+
+     })
+
+     // 根据分类id获取分类
+    export const reqCategory = (categoryId) => ajax(BASE + '/manage/category/info', {
+      params: {
+        categoryId
+      }
+    })
+
+    //删除图片
+    export const reqDeleteImg = (name) =>ajax.post(BASE+'/manage/img/delete')
